@@ -67,7 +67,7 @@ operations supported:
 
 ---
 
-string - a **sequence** of **characters**
+string - an immutable **sequence** of Unicode **characters**
 
 a **unicode** *code point* - a (4-6 hex) number that is the identity of a **character**
 
@@ -97,6 +97,23 @@ the actual **bytes** representing the code point depend on the encoding used
 
 ### Чем список отличается от кортежа
 
+---
+
+tuples - immutable **sequences**
+
+usage:
+- records (fields whose position gives them meaning)
+- immutable lists
+    - clarity (you know that value is not supposed to change)
+    - performance advantages
+        - faster bytecode generation for literals
+        - `tuple(t)` - returns the same tuple
+        - exact memory allocation
+        - items are stored in the tuple struct (list items are stored elsewhere to support extension)
+
+tuple supports all list methods that do not involve adding or removing items, with one exception—tuple lacks the `__reversed__` method.
+
+---
 Списки – это изменяемые последовательности, обычно используемые для хранения однотипных данных (хотя Python не запрещает хранить в них данные разных типов). Представлены классом list.
 
 Кортежи – это неизменяемые последовательности, обычно используемые, чтобы хранить разнотипные данные. Представлены классом tuple.
@@ -106,6 +123,18 @@ the actual **bytes** representing the code point depend on the encoding used
 Для списка определены функции, которые добавляют в такой массив новый элемент, удаляют имеющийся, соединяют два массива в один. Они вызываются методами списка `.append()`, `.pop()`, `.sort()` и т.д.
 
 ### Что такое диапазон
+
+---
+
+The `range` type represents an **immutable sequence of numbers** and is commonly used for looping a specific number of times in for loops.
+
+Ranges **implement all of the common sequence operations except concatenation and repetition** (due to the fact that range objects can only represent sequences that **follow a strict pattern** and repetition and concatenation will usually violate that pattern).
+
+The advantage of the range type over a regular list or tuple is that a range object will **always take the same (small) amount of memory**, no matter the size of the range it represents (as it only stores the start, stop and step values, calculating individual items and subranges as needed).
+
+Testing range objects for equality with == and != compares them as **sequences**. That is, two range objects are considered equal if they represent the same sequence of values. (Note that two range objects that compare equal **might have different start, stop and step** attributes, for example range(0) == range(2, 1, 3) or range(0, 3, 2) == range(0, 4, 2).)
+
+---
 
 Диапазоны – неизменяемые последовательности чисел, которые задаются началом, концом и шагом. Представлены классом range (в Python 2 – xrange; range в Python 2 – это функция, которая возвращает список).
 Параметры конструктора должны быть целыми числами (либо экземпляры класса int, либо любой объект с методом `__index__`)
@@ -143,6 +172,17 @@ for x in [1, 2, 2, 2, 3, 3, 1]:
 `a, b, c = (1, 2, 3)`
 
 ### Как сравниваются последовательности
+
+---
+
+When nested objects are present, Python automatically
+traverses data structures to apply comparisons  **from left to right**, and as deeply as needed. The first difference found along the way determines the comparison result. 
+
+`str` are compared lexicographically (by the character set code point values returned by ord), and character by character until the end or first mismatch ("abc" < "ac").
+
+`list` and `tuple` are compared by comparing each component from left to right, and recursively for nested structures, until the end or first mismatch ([2] > [1, 2], [1, 2] > [1]).
+
+---
 
 Две последовательности равны, если они имеют одинаковый тип, равную длину и соответствующие элементы обоих последовательностей равны.
 
