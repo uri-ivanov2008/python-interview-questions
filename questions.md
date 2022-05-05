@@ -2002,6 +2002,7 @@ cookie hijacking/stealing
 
 ---
 
+https://portswigger.net/web-security/cross-site-scripting
 
 ---
 
@@ -2178,6 +2179,8 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections#principle
 ---
 
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#controlling_caching
+
+`If-None-Match`
 
 ---
 Существуют несколько способов кешировать данные на уровне протокола.
