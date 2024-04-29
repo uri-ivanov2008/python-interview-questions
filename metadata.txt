@@ -5,7 +5,7 @@ title:
 - type: edition
   text: dev-build
 author:
-- yakimka <https://github.com/yakimka>
+- uri-ivanov <https://github.com/uri-ivanov2008>
 - pavlenk0 <https://github.com/pavlenk0>
 toc-title: Содержание
 language: ru-RU
